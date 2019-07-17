@@ -66,9 +66,11 @@ def processText(pathIn, dirOut):
 	wordList = cleanWordList(words)
 
 	#STEP 3: remove items found in exclusion list, remove empty string
-	exclusion = sysHandle.openExclusionList()
-	cleanList = [w for w in wordList if w.lower() not in exclusion]
-	cleanList = [w for w in cleanList if w]
+	#exclusion = sysHandle.openExclusionList()
+	#cleanList = [w for w in wordList if w.lower() not in exclusion]
+	#remove empty items
+	
+	cleanList = [w for w in wordList if w]
 
 	#print(cleanList)
 	sysHandle.writeListToFile(cleanList, pathOut)
