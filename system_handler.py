@@ -47,10 +47,10 @@ def writeListToFile(vlist, vpath):
 
 
 
-def openExclusionList():
-	FILE_NAME = 'exclusion.txt'
+def openExclusionList(filePath):
+	
 	try:
-	    fh = open(FILE_NAME, 'r', encoding ='utf-8')
+	    fh = open(filePath, 'r', encoding ='utf-8')
 	    # Store configuration file values
 	    data = fh.read()
 	    fh.close()   

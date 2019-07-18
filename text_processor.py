@@ -55,22 +55,25 @@ def filter_list(list1):
 
 
 
-def processText(pathIn, dirOut):
+def processText(pathIn, dirOut, dirExclusion):
 	pathOut = sysHandle.getRawPath(pathIn, dirOut)
 	#print('pathOut', pathOut)
 	#output_path = getNormalPath(path1, path2)
 	#STEP 1: read data file and split to get words
 	words = sysHandle.getWordFromTextFile(pathIn)
 
+
 	#STEP 2: trim left, right, remove overlappings and sort
 	wordList = cleanWordList(words)
 
+	#print(wordList)
+
 	#STEP 3: remove items found in exclusion list, remove empty string
-	#exclusion = sysHandle.openExclusionList()
-	#cleanList = [w for w in wordList if w.lower() not in exclusion]
+	exclusionList = sysHandle.loadDictionaries(dirExclusion)
+	#print(exclusionList)
+	cleanList = [w for w in wordList if w.lower() not in exclusionList]
 	#remove empty items
-	
-	cleanList = [w for w in wordList if w]
+	cleanList = [w for w in cleanList if w]
 
 	#print(cleanList)
 	sysHandle.writeListToFile(cleanList, pathOut)
