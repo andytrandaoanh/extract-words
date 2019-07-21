@@ -55,17 +55,31 @@ def filter_list(list1):
 
 
 
-def processText(pathIn, dirOut, dirExclusion):
+def processText(pathIn, dirOut, dirExclusion, dirLog):
 	pathOut = sysHandle.getRawPath(pathIn, dirOut)
-	#print('pathOut', pathOut)
-	#output_path = getNormalPath(path1, path2)
+	#print('dirLog', dirLog)
+	initialString = "Word_Extract_Log_"
+	pathLog = sysHandle.getDatedFilePath(initialString, dirLog)
+	logData = []
+	dateStamp = sysHandle.getDateStamp()
+	message = "Starting to extract words at " + dateStamp
+	logData.append(message)
+	print(message)
+	
 	#STEP 1: read data file and split to get words
 	words = sysHandle.getWordFromTextFile(pathIn)
-
+	dateStamp = sysHandle.getDateStamp()
+	message = "Reading word list completed at " + dateStamp
+	logData.append(message)
+	print(message)
+	
 
 	#STEP 2: trim left, right, remove overlappings and sort
 	wordList = cleanWordList(words)
-
+	dateStamp = sysHandle.getDateStamp()
+	message = "Trimming word list completed at " + dateStamp
+	logData.append(message)
+	print(message)
 	#print(wordList)
 
 	#STEP 3: remove items found in exclusion list, remove empty string
@@ -75,7 +89,15 @@ def processText(pathIn, dirOut, dirExclusion):
 	#remove empty items
 	cleanList = [w for w in cleanList if w]
 
+	#log activity
+	dateStamp = sysHandle.getDateStamp()
+	message = "Removing exluded items completed at " + dateStamp
+	logData.append(message)
+	print(message)
+
+
 	#print(cleanList)
 	sysHandle.writeListToFile(cleanList, pathOut)
+	sysHandle.writeListToFile(logData, pathLog)
 	sysHandle.openDir(dirOut)
 	sys.exit()

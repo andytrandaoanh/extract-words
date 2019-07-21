@@ -1,4 +1,5 @@
 import os, sys
+from datetime import datetime
 
 def openDir(targetdir):
 	#open directory when done	
@@ -25,8 +26,18 @@ def getRawPath(pathIn, dirOut):
 	pathOut =  os.path.join(dirOut, temp_path) 
 	return(pathOut)
 
+def getDatedFilePath(initialString, dirOut):
+	now = datetime.now()
+	dateTime = now.strftime("%Y%m%d_%H%M")
+	fileName = initialString + dateTime + ".txt"
+	pathOut =  os.path.join(dirOut, fileName ) 
+	return(pathOut)
 
+def getDateStamp():
+	getDateStamp = str(datetime.now())
+	return(getDateStamp)
 
+	
 def getWordFromTextFile(filepath):
     try:
         ofile = open(filepath, 'r', encoding = 'utf-8') 

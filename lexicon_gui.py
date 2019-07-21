@@ -64,10 +64,11 @@ class LexGUI:
             cf.set_config_value(cf.RECENT_OUTPUT_DIR,self.filename2)
     
     def processText(self):
-        if(self.filepath.get() and self.filepath2.get() and self.filepath33.get()):
-            text_processor.processText(self.filepath.get(), self.filepath2.get(), self.filepath33.get())
+        if(self.filepath.get() and self.filepath2.get() and self.filepath33.get()  and self.filepath34.get()):
+            text_processor.processText(self.filepath.get(), 
+                self.filepath2.get(), self.filepath33.get(), self.filepath34.get())
         else:
-            messagebox.showwarning("Error", "Missing input file, output or exclusion directory")
+            messagebox.showwarning("Error", "Missing input file, output or settings")
    
     def createTab1(self):
         #frame
@@ -137,8 +138,8 @@ class LexGUI:
             cf.set_config_value(cf.RECENT_OUTPUT_DIR2,self.filename22)
     
     def processText2(self):
-        if(self.filepath21.get() and self.filepath22.get() and self.filepath31.get() and self.filepath32.get()):
-            text_processor_2.processText(self.filepath21.get(), self.filepath22.get(), self.filepath31.get(), self.filepath32.get())
+        if(self.filepath21.get() and self.filepath22.get() and self.filepath31.get() and self.filepath32.get() and self.filepath34.get()  and self.filepath35.get()):
+            text_processor_2.processText(self.filepath21.get(), self.filepath22.get(), self.filepath31.get(), self.filepath32.get(), self.filepath34.get(), self.filepath35.get())
         else:
             messagebox.showwarning("Error", "Missing input file or output directory or settings")
    
@@ -215,11 +216,28 @@ class LexGUI:
             self.filepath33.set(self.filename33) #set the textbox to the file path        
             cf = config_handler.ConfigHandler()
             cf.set_config_value(cf.RECENT_OUTPUT_DIR5,self.filename33)     
+
+    #--for log directory
+    def dirDialog6(self):
+        self.filename34 = filedialog.askdirectory()
+        if (self.filename34):
+            self.filepath34.set(self.filename34) #set the textbox to the file path        
+            cf = config_handler.ConfigHandler()
+            cf.set_config_value(cf.RECENT_OUTPUT_DIR6,self.filename34)     
+    #--for recyle directory
+    def dirDialog7(self):
+        self.filename35 = filedialog.askdirectory()
+        if (self.filename35):
+            self.filepath35.set(self.filename35) #set the textbox to the file path        
+            cf = config_handler.ConfigHandler()
+            cf.set_config_value(cf.RECENT_OUTPUT_DIR7,self.filename35)     
+        
+        
         
     def createTab3(self):
         #frame
 
-        self.labelFrame3 = ttk.LabelFrame(self.tab3, text= 'Dictionary Directory:')
+        self.labelFrame3 = ttk.LabelFrame(self.tab3, text= 'Dictionary Directory (Lowercase):')
         self.labelFrame3.grid(column=0, row=0, padx = 20, pady = 20)
 
        #textbox 31
@@ -239,9 +257,9 @@ class LexGUI:
         self.button31.grid(column = 1, row = 3, sticky = "w")
  
 
-        #label 31
-        self.label31 = ttk.Label(self.labelFrame3, text="Select Trash Directory:")
-        self.label31.grid(column = 0, row = 4, sticky = "w")
+        #label 32
+        self.label32 = ttk.Label(self.labelFrame3, text="Select Trash Directory (Word):")
+        self.label32.grid(column = 0, row = 4, sticky = "w")
   
         #textbox 32
         self.filepath32 = tk.StringVar()
@@ -263,7 +281,7 @@ class LexGUI:
         self.label33 = ttk.Label(self.labelFrame3, text="Select Exclusion Directory (Dictionary):")
         self.label33.grid(column = 0, row = 6, sticky = "w")
   
-        #textbox 32
+        #textbox 33
         self.filepath33 = tk.StringVar()
         #load config value
         cf = config_handler.ConfigHandler()
@@ -279,9 +297,47 @@ class LexGUI:
             command=self.dirDialog5)
         self.button33.grid(column = 1, row = 7, sticky = "w")
 
+        #section 34==============================
+        #label 34
+        self.label34 = ttk.Label(self.labelFrame3, text="Select Log Directory (Word):")
+        self.label34.grid(column = 0, row = 8, sticky = "w")
+  
+        #textbox 34
+        self.filepath34 = tk.StringVar()
+        #load config value
+        cf = config_handler.ConfigHandler()
+        value = cf.get_config_value(cf.RECENT_OUTPUT_DIR6)
+        self.filepath34.set(value) 
+        self.path34 = ttk.Entry(self.labelFrame3, width=90, 
+            textvariable = self.filepath34)
+        self.path34.grid(column = 0, row = 9, sticky = "w")
+        
 
+        #button 34
+        self.button34 = ttk.Button(self.labelFrame3, text = "Browse Directory", 
+            command=self.dirDialog6)
+        self.button34.grid(column = 1, row = 9, sticky = "w")
 
+        #section 35==============================
+        #label 35
+        self.label35 = ttk.Label(self.labelFrame3, text="Select Recyle Directory (Word):")
+        self.label35.grid(column = 0, row = 10, sticky = "w")
+  
+        #textbox 35
+        self.filepath35 = tk.StringVar()
+        #load config value
+        cf = config_handler.ConfigHandler()
+        value = cf.get_config_value(cf.RECENT_OUTPUT_DIR7)
+        self.filepath35.set(value) 
+        self.path35 = ttk.Entry(self.labelFrame3, width=90, 
+            textvariable = self.filepath35)
+        self.path35.grid(column = 0, row = 11, sticky = "w")
+        
 
+        #button 35
+        self.button35 = ttk.Button(self.labelFrame3, text = "Browse Directory", 
+            command=self.dirDialog7)
+        self.button35.grid(column = 1, row = 11, sticky = "w")
 
 
     def createGUI(self):
